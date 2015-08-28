@@ -43,7 +43,14 @@
 		squares.attr("x", function(d) { return d.x; })
 			.attr("y", function(d) { return d.y; })
 			.attr("height", function(d) { return d.dim; })
-			.attr("width", function(d) { return d.dim; });
+			.attr("width", function(d) { return d.dim; })
+			.attr("fill", "#063d6b")
+			.on("mouseover", function() {
+				d3.select(this).classed("active", true);
+			})
+			.on("mouseout", function() {
+				d3.select(this).classed("active", false);
+			});
   }
 
   function setCenters(squareData) {
@@ -79,9 +86,15 @@
   			if (i !== j) {
   				svgContainer.append("path")
   					.attr("d", lineFunction({source: points[i], target: points[j]}))
-  					.attr("stroke", "blue")
+  					.attr("stroke", "#6bb2ed")
   					.attr("stroke-width", squareData[j].dim / 4)
-  					.attr("fill", "none");
+  					.attr("fill", "none")
+  					.on("mouseover", function() {
+							d3.select(this).classed("active", true);
+						})
+						.on("mouseout", function() {
+							d3.select(this).classed("active", false);
+						});
   			}
   		}
   	}
