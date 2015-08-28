@@ -8,12 +8,12 @@
 		},
 		{
 			x: 200,
-			y: 400,
+			y: 525,
 			dim: 20
 		},
 		{
-			x: 450,
-			y: 110,
+			x: 700,
+			y: 300,
 			dim: 40
 		},
 		{
@@ -24,7 +24,7 @@
 	];
 
 	function draw(squareData) {
-		setup(600, 600);
+		setup(800, 600);
 		drawLines(squareData);
 		createSquares(squareData);
 	}
@@ -33,6 +33,12 @@
 		d3.select("svg").attr("width", width)
   		.attr("height", height);
 	}
+
+	d3.selection.prototype.moveToFront = function() {
+	  return this.each(function(){
+	    this.parentNode.appendChild(this);
+	  });
+	};
 
   function createSquares(squareData) {
   	var squares = d3.select("svg")
@@ -46,7 +52,8 @@
 			.attr("width", function(d) { return d.dim; })
 			.attr("fill", "#063d6b")
 			.on("mouseover", function() {
-				d3.select(this).classed("active", true);
+				d3.select(this).classed("active", true)
+					.moveToFront();
 			})
 			.on("mouseout", function() {
 				d3.select(this).classed("active", false);
@@ -90,7 +97,9 @@
   					.attr("stroke-width", squareData[j].dim / 4)
   					.attr("fill", "none")
   					.on("mouseover", function() {
-							d3.select(this).classed("active", true);
+							d3.select(this).classed("active", true)
+								.moveToFront();
+							d3.selectAll("rect").moveToFront();
 						})
 						.on("mouseout", function() {
 							d3.select(this).classed("active", false);
